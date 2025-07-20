@@ -42,13 +42,12 @@ for name, model in models.items():
     }
 
 # Display initial results
-print("\n🔍 Model Performance (Before Tuning):\n")
+print("\n Model Performance (Before Tuning):\n")
 print(pd.DataFrame(results).T)
 
-# -----------------------------
 # GridSearchCV for Random Forest
-# -----------------------------
-print("\n🔧 Running GridSearchCV for Random Forest...\n")
+
+print("\n Running GridSearchCV for Random Forest...\n")
 
 param_grid_rf = {
     'n_estimators': [100, 200, 300],
@@ -59,12 +58,11 @@ param_grid_rf = {
 grid_rf = GridSearchCV(RandomForestClassifier(), param_grid_rf, cv=5, scoring='f1', n_jobs=-1)
 grid_rf.fit(X_train, y_train)
 
-print("✅ Best Parameters for Random Forest:", grid_rf.best_params_)
+print(" Best Parameters for Random Forest:", grid_rf.best_params_)
 
-# -----------------------------
 # RandomizedSearchCV for SVC
-# -----------------------------
-print("\n🎲 Running RandomizedSearchCV for SVC...\n")
+
+print("\n Running RandomizedSearchCV for SVC...\n")
 
 param_dist_svc = {
     'C': uniform(0.1, 10),
@@ -76,12 +74,11 @@ random_svc = RandomizedSearchCV(SVC(), param_distributions=param_dist_svc, n_ite
                                 scoring='f1', n_jobs=-1, random_state=42)
 random_svc.fit(X_train, y_train)
 
-print("✅ Best Parameters for SVC:", random_svc.best_params_)
+print(" Best Parameters for SVC:", random_svc.best_params_)
 
-# -----------------------------
 # Evaluate Tuned Models
-# -----------------------------
-print("\n📊 Evaluation of Tuned Models:\n")
+
+print("\n Evaluation of Tuned Models:\n")
 
 # Random Forest (Tuned)
 best_rf = grid_rf.best_estimator_
